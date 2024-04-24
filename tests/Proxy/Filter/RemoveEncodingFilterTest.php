@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class RemoveEncodingFilterTest extends TestCase
 {
-    /**
-     * @var RemoveEncodingFilter
-     */
-    private $filter;
+    private RemoveEncodingFilter $filter;
 
     protected function setUp(): void
     {

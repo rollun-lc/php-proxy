@@ -8,10 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class DummyAdapterTest extends TestCase
 {
-    /**
-     * @var DummyAdapter
-     */
-    private $adapter;
+    private DummyAdapter $adapter;
 
     protected function setUp(): void
     {

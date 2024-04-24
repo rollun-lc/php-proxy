@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class RemoveLocationFilterTest extends TestCase
 {
-    /**
-     * @var RemoveLocationFilter
-     */
-    private $filter;
+    private RemoveLocationFilter $filter;
 
     protected function setUp(): void
     {

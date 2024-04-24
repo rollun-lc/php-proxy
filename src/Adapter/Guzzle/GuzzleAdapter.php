@@ -5,20 +5,19 @@ namespace Proxy\Adapter\Guzzle;
 use GuzzleHttp\Client;
 use Proxy\Adapter\AdapterInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class GuzzleAdapter implements AdapterInterface
 {
     /**
      * The Guzzle client instance.
-     * @var Client
      */
-    protected $client;
+    protected Client $client;
 
     /**
      * Construct a Guzzle based HTTP adapter.
-     * @param Client $client
      */
-    public function __construct(Client $client = null)
+    public function __construct(?Client $client = null)
     {
         $this->client = $client ?: new Client;
     }
@@ -26,7 +25,7 @@ class GuzzleAdapter implements AdapterInterface
     /**
      * @inheritdoc
      */
-    public function send(RequestInterface $request)
+    public function send(RequestInterface $request): ResponseInterface
     {
         return $this->client->send($request);
     }

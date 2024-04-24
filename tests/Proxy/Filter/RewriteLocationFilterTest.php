@@ -7,10 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class RewriteLocationFilterTest extends TestCase
 {
-    /**
-     * @var RewriteLocationFilter
-     */
-    private $filter;
+    private RewriteLocationFilter $filter;
 
     protected function setUp(): void
     {

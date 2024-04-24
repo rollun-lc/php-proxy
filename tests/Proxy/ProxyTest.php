@@ -9,13 +9,11 @@ use PHPUnit\Framework\TestCase;
 use Proxy\Adapter\Dummy\DummyAdapter;
 use Proxy\Exception\UnexpectedValueException;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class ProxyTest extends TestCase
 {
-    /**
-     * @var Proxy
-     */
-    private $proxy;
+    private Proxy $proxy;
 
     protected function setUp(): void
     {
@@ -48,10 +46,13 @@ class ProxyTest extends TestCase
     {
         $applied = false;
 
-        $this->proxy->forward(ServerRequestFactory::fromGlobals())->filter(function ($request, $response) use (&$applied
-        ) {
-            $applied = true;
-        })->to('http://www.example.com');
+        $this->proxy->forward(ServerRequestFactory::fromGlobals())
+            ->filter(
+                function (RequestInterface $request, ResponseInterface $response, callable $next) use (&$applied) {
+                    $applied = true;
+                    return $next($request, $response);
+                }
+            )->to('http://www.example.com');
 
         $this->assertTrue($applied);
     }

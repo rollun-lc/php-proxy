@@ -13,27 +13,16 @@ use Laminas\Diactoros\Uri;
 
 class Proxy
 {
-    /**
-     * @var RequestInterface
-     */
-    protected $request;
-
-    /**
-     * @var AdapterInterface
-     */
-    protected $adapter;
+    protected ?RequestInterface $request = null;
 
     /**
      * @var callable[]
      */
-    protected $filters = [];
+    protected array $filters = [];
 
-    /**
-     * @param AdapterInterface $adapter
-     */
-    public function __construct(AdapterInterface $adapter)
-    {
-        $this->adapter = $adapter;
+    public function __construct(
+        protected AdapterInterface $adapter
+    ){
     }
 
     /**
@@ -42,7 +31,7 @@ class Proxy
      * @param  RequestInterface $request
      * @return $this
      */
-    public function forward(RequestInterface $request)
+    public function forward(RequestInterface $request): static
     {
         $this->request = $request;
 
@@ -51,12 +40,9 @@ class Proxy
 
     /**
      * Forward the request to the target url and return the response.
-     *
-     * @param  string $target
      * @throws UnexpectedValueException
-     * @return ResponseInterface
      */
-    public function to($target)
+    public function to(string $target): ResponseInterface
     {
         if ($this->request === null) {
             throw new UnexpectedValueException('Missing request instance.');
@@ -100,17 +86,14 @@ class Proxy
      * @param  callable $callable
      * @return $this
      */
-    public function filter(callable $callable)
+    public function filter(callable $callable): static
     {
         $this->filters[] = $callable;
 
         return $this;
     }
 
-    /**
-     * @return RequestInterface
-     */
-    public function getRequest()
+    public function getRequest(): ?RequestInterface
     {
         return $this->request;
     }

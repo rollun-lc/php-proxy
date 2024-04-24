@@ -12,25 +12,13 @@ use Psr\Http\Message\ResponseInterface;
 
 class GuzzleAdapterTest extends TestCase
 {
-    /**
-     * @var GuzzleAdapter
-     */
-    private $adapter;
+    private GuzzleAdapter $adapter;
 
-    /**
-     * @var array
-     */
-    private $headers = ['Server' => 'Mock'];
+    private array $headers = ['Server' => 'Mock'];
 
-    /**
-     * @var int
-     */
-    private $status = 200;
+    private int $status = 200;
 
-    /**
-     * @var string
-     */
-    private $body = 'Totally awesome response body';
+    private string $body = 'Totally awesome response body';
 
     protected function setUp(): void
     {
@@ -104,20 +92,14 @@ class GuzzleAdapterTest extends TestCase
         $adapter->send($request);
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    private function sendRequest()
+    private function sendRequest(): ResponseInterface
     {
         $request = new Request('http://localhost', 'GET');
 
         return $this->adapter->send($request);
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    private function createResponse()
+    private function createResponse(): ResponseInterface
     {
         return new GuzzleResponse($this->status, $this->headers, $this->body);
     }
